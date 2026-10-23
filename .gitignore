@@ -59,6 +59,11 @@ artifacts/
 logs/
 *.log
 
+# Project data / outputs
+data/
+outputs/
+for_release/
+
 # Temporary files
 .tmp/
 tmp/

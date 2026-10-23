@@ -1,0 +1,6 @@
+# Overlapped Speech Detection — configuration (Design §7)
+segmentation: pyannote/segmentation-3.0
+min_overlap_duration: 0.0   # s; overlap regions shorter than this are discarded (-> pipeline min_duration_on)
+min_gap_duration: 0.0       # s; non-overlap gaps shorter than this are filled (-> pipeline min_duration_off)
+timeline_resolution: 0.01   # s; grid spacing for the binary timeline (plotting/scoring only)
+device: auto                # auto | cpu | cuda
