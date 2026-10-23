@@ -6,6 +6,9 @@
 pyannote.audio==3.4.0
 pyannote.core==5.0.0
 pyannote.metrics==3.2.1
+# huggingface_hub pinned <1.0: pyannote.audio 3.4.0 calls hf_hub_download(use_auth_token=...),
+# an argument removed in huggingface_hub 1.0/2.x.
+huggingface_hub==0.26.2
 torch==2.5.1
 torchaudio==2.5.1
 speechbrain==1.0.2
