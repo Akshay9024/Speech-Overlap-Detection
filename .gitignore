@@ -1,0 +1,66 @@
+# OS / editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+Design.md
+.pyre/
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+
+# Environment / secrets
+.env
+.env.*
+CLAUDE.md
+
+*.pem
+*.key
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Model / audio / data artifacts
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.m4a
+*.npy
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.pkl
+*.joblib
+checkpoints/
+models/
+artifacts/
+logs/
+*.log
+
+# Temporary files
+.tmp/
+tmp/
+*.tmp
+*.bak
