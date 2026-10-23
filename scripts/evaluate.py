@@ -29,7 +29,7 @@ from overlap.plot import plot_timeline  # noqa: E402
 from overlap.timeline import intervals_to_mask  # noqa: E402
 
 
-def evaluate(manifest_path: str, config_path: str, out_dir: str, collar: float, plots: bool) -> dict:
+def evaluate(manifest_path: str, config_path: str, out_dir: str, collar: float, plots: bool, limit: int | None = None) -> dict:
     manifest = json.loads(Path(manifest_path).read_text())
     cfg = load_config(config_path)
     out = Path(out_dir)
@@ -38,13 +38,15 @@ def evaluate(manifest_path: str, config_path: str, out_dir: str, collar: float, 
 
     pipeline = build_pipeline(cfg)
 
+    entries = manifest["files"][:limit] if limit else manifest["files"]
     per_file = []
     agg_strict = {"tp": 0, "fp": 0, "fn": 0}
     agg_collar = {"tp": 0, "fp": 0, "fn": 0}
     aps = []
 
-    for entry in manifest["files"]:
+    for i, entry in enumerate(entries, 1):
         uri = entry["uri"]
+        print(f"[{i}/{len(entries)}] {uri}", file=sys.stderr, flush=True)
         waveform, sr, duration = load_audio(entry["audio"])
 
         annotation = load_rttm_annotation(entry["rttm"], uri=entry.get("rttm_uri"))
@@ -111,9 +113,10 @@ def main() -> None:
     parser.add_argument("--out-dir", default="outputs/eval")
     parser.add_argument("--collar", type=float, default=0.25, help="lenient collar in seconds (Design §8)")
     parser.add_argument("--plots", action="store_true", help="save per-file overlap plots")
+    parser.add_argument("--limit", type=int, default=None, help="evaluate only the first N files (smoke test)")
     args = parser.parse_args()
 
-    report = evaluate(args.manifest, args.config, args.out_dir, args.collar, args.plots)
+    report = evaluate(args.manifest, args.config, args.out_dir, args.collar, args.plots, args.limit)
     summary = {k: report[k] for k in ("dataset", "seen_domain", "corpus_strict", "corpus_collar", "mean_average_precision", "metadata")}
     print(json.dumps(summary, indent=2))
 
